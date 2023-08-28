@@ -5,6 +5,8 @@ import { auth } from '../firebase/firebase';
 const AuthContext = createContext({
   userEmail: '',
   isLoggedIn: false,
+  photoURL: '',
+  displayName: '',
 });
 
 export default function AuthProvider(props) {
@@ -24,7 +26,7 @@ export default function AuthProvider(props) {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
+        // const uid = user.uid;
         // ...
         console.log('Prisijungta');
         console.log('user ===', user);

@@ -17,6 +17,7 @@ export default function Header() {
       })
       .catch((error) => {
         // An error happened.
+        console.warn(error);
       });
   }
 
