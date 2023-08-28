@@ -1,11 +1,19 @@
-import Login from './components/Login.jsx';
+import { Route, Routes } from 'react-router-dom';
 import { app } from './firebase/firebase.js';
+import HomePage from './pages/HomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import Header from './components/layout/Header.jsx';
 export default function App() {
   console.log('app : : ', app);
   return (
-    <div className='container'>
-      <h1>Firebase</h1>
-      <Login />
+    <div>
+      <Header />
+      <div className='container'>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/login' element={<LoginPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
