@@ -1,0 +1,48 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 40px auto;
+
+  .profileTitle {
+    font-size: 40px;
+    color: #cee;
+  }
+  .profileSubtitle {
+    font-weight: bold;
+  }
+  .profilePhoto {
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    margin-bottom: 40px;
+  }
+  .profileForm {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 40px;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 12px;
+    input {
+      width: 100%;
+    }
+    button {
+      width: 200px;
+      background-color: #fff;
+    }
+  }
+  .profileLogoutBtn {
+    width: 200px;
+    background-color: tomato;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}

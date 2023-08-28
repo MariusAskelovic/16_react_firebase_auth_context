@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
+import './ProfilePage.scss';
 
 export default function ProfilePage() {
   const [displayName, setDisplayName] = useState('');
@@ -32,28 +33,34 @@ export default function ProfilePage() {
     signOut(auth).then(console.log('pavyko logout')).catch(console.warn);
   }
   return (
-    <div className='contaienr'>
-      <h1>ProfilePage</h1>
-      <p>Welcome to Your own space</p>
-      <h2>{displayName ? displayName : null}</h2>
-      <img src={photoURL ? photoURL : '#'} alt='Profile image' />
-      <form onSubmit={handleSubmit}>
+    <div className='container profileContainer'>
+      <h1 className='profileTitle'>ProfilePage</h1>
+      <p className='profileSubtitle'>Welcome to Your own space</p>
+      <h2 className='profileName'>{displayName ? displayName : null}</h2>
+      <img
+        className='profilePhoto'
+        src={photoURL ? photoURL : '#'}
+        alt='Profile image'
+      />
+      <form className='profileForm' onSubmit={handleSubmit}>
         <input
           type='text'
           placeholder='enter your new display name'
           onChange={(e) => setDisplayName(e.target.value)}
           value={displayName}
         />
+        <button className='profileBtn' type='submit'>
+          Update
+        </button>
         <input
           type='text'
           placeholder='enter photoURL'
           onChange={(e) => setPhotoURL(e.target.value)}
           value={photoURL}
         />
-        <button type='submit'>Update</button>
       </form>
       <br></br>
-      <button type='submit' onClick={logout}>
+      <button className='profileLogoutBtn' type='submit' onClick={logout}>
         Logout
       </button>
     </div>

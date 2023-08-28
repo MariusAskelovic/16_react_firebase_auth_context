@@ -19,6 +19,8 @@ export default function AuthProvider(props) {
   const ctx = {
     userEmail: userEmail,
     isLoggedIn: isLoggedIn,
+    photoURL: '',
+    displayName: '',
   };
 
   useEffect(() => {
