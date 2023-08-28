@@ -3,8 +3,8 @@ import { auth } from '../firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const [emailValue, setEmailValue] = useState('james@bond.com');
+  const [passwordValue, setPasswordValue] = useState('123456');
 
   function handleSubmit(e) {
     e.preventDefault();
