@@ -1,56 +1,66 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../firebase/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState('james@bond.com');
   const [passwordValue, setPasswordValue] = useState('123456');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // if (emailValue.trim().length === 0 || passwordValue.trim().length === 0) {
-    //   return;
-    // }
+  function handleSubmit(event) {
+    event.preventDefault();
+    // console.log('ar veikia?');
+    // atspausdinti email ir passwor cia
+    // console.log('emailValue ===', emailValue);
+    // console.log('passwordValue ===', passwordValue);
+
+    // nutraukti funkcijo vykdyma jei tuscias email arba password
     if (!emailValue || !passwordValue) {
       console.warn('email or password not entered');
       return;
     }
-    // console.log('email: ', emailValue);
-    // console.log('password: ', passwordValue);
-    loginWithFirebase();
+
+    loginWithFireBase();
     console.log('forma ok');
   }
 
-  function loginWithFirebase() {
+  function loginWithFireBase() {
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         // ...
-        console.log('user ===', user);
+        // console.log('user ===', user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode === 'auth/user-not-found') {
+          setErrorMsg('This email is not registered');
+        } else {
+          setErrorMsg('Wrong Email or Password');
+        }
         console.log('errorCode ===', errorCode);
         console.log('errorMessage ===', errorMessage);
       });
   }
+
   return (
     <div>
       <h2>Login here</h2>
+      <h1>{errorMsg}</h1>
       <form onSubmit={handleSubmit}>
         <input
+          onChange={(event) => setEmailValue(event.target.value)}
+          value={emailValue}
           type='text'
           placeholder='your email'
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
         />
         <input
+          onChange={(event) => setPasswordValue(event.target.value)}
+          value={passwordValue}
           type='password'
           placeholder='your password'
-          onChange={(e) => setPasswordValue(e.target.value)}
-          value={passwordValue}
         />
         <button type='submit'>Login</button>
       </form>

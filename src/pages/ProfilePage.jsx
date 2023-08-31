@@ -1,68 +1,72 @@
 import { useState } from 'react';
-import { getAuth, signOut, updateProfile } from 'firebase/auth';
-import './ProfilePage.scss';
+import { getAuth, updateProfile } from 'firebase/auth';
 
 export default function ProfilePage() {
-  const [displayName, setDisplayName] = useState('');
-  const [photoURL, setPhotoURL] = useState(
-    'https://example.com/jane-q-user/profile.jpg'
-  );
-
   const auth = getAuth();
-  updateProfile(auth.currentUser, {
-    displayName: displayName,
-    photoURL: photoURL,
-  })
-    .then(() => {
-      // Profile updated!
-      // ...
-      console.log('successfully updated');
+  const [dispName, setDispName] = useState(auth.currentUser.displayName);
+  const [phUrl, setPhUrl] = useState(auth.currentUser.photoURL);
+
+  const [updateHappened, setUpdateHappened] = useState(false);
+
+  function enterDispName(event) {
+    setDispName(event.target.value);
+  }
+  function enterPhotoUrl(event) {
+    setPhUrl(event.target.value);
+  }
+
+  // pasiimti displayName protoUrl info is konteksto
+
+  // TODO: pasidaryti kad atsinaujintu info be refresh
+
+  /**@param {SubmitEvent} event */
+  function handleSubmit(event) {
+    event.preventDefault();
+    // kas ?
+    const auth = getAuth();
+    updateProfile(auth.currentUser, {
+      displayName: dispName,
+      photoURL: phUrl,
     })
-    .catch((error) => {
-      console.warn('failed to update profile');
-      console.warn(error);
-    });
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('displayName ===', auth.currentUser.displayName);
-    console.log('photoURL ===', auth.currentUser.photoURL);
+      .then(() => {
+        // Profile updated!
+        console.log('update pavyko');
+        // console.log('auth.currentUser ===', auth.currentUser);
+        // iskviesti getUserInfo() funkcija esancia kontekste
+        setUpdateHappened(!updateHappened);
+      })
+      .catch((error) => {
+        // An error occurred
+        console.warn('update nepavyko');
+      });
   }
 
-  function logout() {
-    signOut(auth).then(console.log('pavyko logout')).catch(console.warn);
-  }
   return (
-    <div className='container profileContainer'>
-      <h1 className='profileTitle'>ProfilePage</h1>
-      <p className='profileSubtitle'>Welcome to Your own space</p>
-      <h2 className='profileName'>{displayName ? displayName : null}</h2>
-      <img
-        className='profilePhoto'
-        src={photoURL ? photoURL : '#'}
-        alt='Profile image'
-      />
-      <form className='profileForm' onSubmit={handleSubmit}>
+    <div className='container'>
+      <h1>ProfilePage</h1>
+      <h2>{auth.currentUser.displayName}</h2>
+      <img src={auth.currentUser.photoURL} alt='Profile image' />
+      <p>Welcome to Your own space</p>
+      <p>
+        entered values: {dispName} {phUrl}
+      </p>
+      <form onSubmit={handleSubmit}>
         <input
+          value={dispName}
+          onChange={enterDispName}
           type='text'
-          placeholder='enter your new display name'
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={displayName}
+          placeholder='displayName'
         />
-        <button className='profileBtn' type='submit'>
-          Update
-        </button>
         <input
+          value={phUrl}
+          onChange={enterPhotoUrl}
           type='text'
-          placeholder='enter photoURL'
-          onChange={(e) => setPhotoURL(e.target.value)}
-          value={photoURL}
+          placeholder='protoUrl'
         />
+        <button>update</button>
       </form>
-      <br></br>
-      <button className='profileLogoutBtn' type='submit' onClick={logout}>
-        Logout
-      </button>
+
+      <p>jei pavyksta pridet email atnaujinima</p>
     </div>
   );
 }

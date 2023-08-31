@@ -16,6 +16,9 @@
     border-radius: 20px;
     border: 2px solid #ccc;
     margin-bottom: 40px;
+    max-height: 200px;
+    object-fit: cover;
+    border: 100px solid #000;
   }
   .profileForm {
     display: flex;
