@@ -19,9 +19,9 @@ export default function TodoPage() {
         ...doc.data(),
       };
       dataBack.push(singleBookObj);
-      console.log('singleBookObj ===', singleBookObj);
+      //   console.log('singleBookObj ===', singleBookObj);
     });
-    console.log('dataBack ===', dataBack);
+    // console.log('dataBack ===', dataBack);
     setBooksArr(dataBack);
   }
   return (
